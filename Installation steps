@@ -1,0 +1,67 @@
+ Install Nexus Repository 
+ What is Nexus Repository Manager ?: Artifact Repository: Artifact repository is a location where you can store your all artifacts which are needed for the projects. 
+ Nexus Repository Manager: It allows developer to collect, retrieve, manage our artifacts.Basically Nexus Repository Manager helps us to host our repositories.For eg- “Maven Central Repository” so we can use it to retrieve all dependencies needed for a Maven build.
+ 
+Prerequisites
+Open JDK 8
+Minimum CPU’s: 4
+Ubuntu Server with User sudo privileges. or other 
+Set User limits
+Web Browser
+Firewall/Inbound port: 22, 8081
+
+
+update the system packages
+sudo apt-get update
+sudo apt install openjdk-8-jre-headless
+
+
+Navigate to /opt directory
+cd /opt
+Download the SonaType Nexus on Ubuntu using wget
+
+sudo wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+ls -l
+mv nexus nexus-3.53.1.02
+cd nexus/
+cd bin/
+
+As security practice, not to run nexus service using root user, so lets create new user named nexus to run nexus service
+adduser nexus
+passwd nexus
+
+
+To set no password for nexus user open the visudo file in ubuntu
+sudo visudo
+Add below line into it , save and exit
+nexus ALL=(ALL) NOPASSWD: ALL
+cd ..
+cd..
+
+
+make sure to return to /opt
+Give permission to nexus files and nexus directory to nexus user
+sudo chown -R nexus:nexus nexus
+sudo chown -R nexus:nexus sonatype-work
+
+cd nexus/bin/
+ls -l
+sudo nano nexus.rc
+cd ..
+cd etc/
+ls
+nano nexus-default.properties
+no change
+To start nexus service using systemctl
+
+sudo systemctl start nexus
+To enable nexus service at system startup
+
+sudo systemctl enable nexus
+To check nexus service status
+
+sudo systemctl status nexus
+To stop Nexus service
+
+sudo systemctl stop nexus
+
